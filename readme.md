@@ -2,7 +2,7 @@
 
 ## About
 
-This is a semi e-commerse platform where users can create stores and add products(to be sold) to their stores
+This is a semi e-commerce platform where users can create stores and add products(to be sold) to their stores
 The aim of this project is to give local and small bussinesses an online platform to showcase their products
 
 ## Contribution
