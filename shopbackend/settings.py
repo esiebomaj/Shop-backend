@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     # store apps
     'store',
     'products',
+    'accounts',
     
     # 3rd party apps
 ]
