@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     
     # store apps
     'store',
+    'products',
     
     # 3rd party apps
 ]
