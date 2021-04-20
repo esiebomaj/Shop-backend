@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
 from pathlib import Path
+from datetime import timedelta
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -37,16 +38,21 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    
+
     # store apps
     'store',
     'products',
     'accounts',
-    
+
     # 3rd party apps
     'rest_framework',
     'rest_framework.authtoken',
     'dj_rest_auth',
+    'django.contrib.sites',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'dj_rest_auth.registration',
 ]
 
 MIDDLEWARE = [
@@ -133,3 +139,42 @@ STATIC_URL = '/static/'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# custom user settings
+AUTH_USER_MODEL = 'accounts.CustomUser'
+
+
+REST_FRAMEWORK = {
+
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticated',
+    ],
+
+    'DEFAULT_AUTHENTICATION_CLASSES':
+    [
+        'rest_framework_simplejwt.authentication.JWTAuthentication'
+        # 'dj_rest_auth.jwt_auth.JWTCookieAuthentication',
+        # 'rest_framework.authentication.SessionAuthentication',
+    ]}
+
+
+REST_USE_JWT = True
+JWT_AUTH_COOKIE = 'caligoauthkey'
+SITE_ID = 1
+REST_AUTH_REGISTER_SERIALIZERS = {
+    # custom registration serializers to include custom user fields
+    'REGISTER_SERIALIZER': 'accounts.serializers.RegistrationSerializer'}
+
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_AUTHENTICATION_METHOD = "email"
+ACCOUNT_CONFIRM_EMAIL_ON_GET = True
+
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=5),
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=14),
+    'ROTATE_REFRESH_TOKENS': True, }
+
+
+DEFAULT_FROM_EMAIL = 'shopapp@gmail.com'
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'

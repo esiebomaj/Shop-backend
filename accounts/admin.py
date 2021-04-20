@@ -1,3 +1,27 @@
 from django.contrib import admin
+from django.contrib.auth.admin import UserAdmin
+from .forms import CustomUserChangeForm, CustomUserCreationForm
+from .models import CustomUser
 
-# Register your models here.
+
+class CustomUserAdmin(UserAdmin):
+    actions = ("send_push_notification", )
+    add_form = CustomUserCreationForm
+    form = CustomUserChangeForm
+    model = CustomUser
+    list_display = ['email', 'username',
+                    'first_name', 'last_name', 'phone_number']
+
+    fieldsets = (*UserAdmin.fieldsets,
+                 (
+                     'Other fields',
+                     {
+                         'fields': (
+                             'phone_number',
+                         ),
+                     },
+                 ),
+                 )
+
+
+admin.site.register(CustomUser, CustomUserAdmin)
